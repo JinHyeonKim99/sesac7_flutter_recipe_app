@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateLess/presentation/screen/tab/tab_view_model.dart';
+
+class TabScreen extends StatelessWidget {
+  final Widget body;
+  final int currentIndex;
+  final void Function(int index) onTap;
+
+  const TabScreen({
+    super.key,
+    required this.body,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = TabViewModel.of(context);
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(child: body),
+          BottomNavigationBar(
+            fixedColor: viewModel.color,
+            unselectedItemColor: Colors.grey,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: currentIndex,
+            onTap: (int index) {
+              onTap(index);
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark),
+                label: 'Saved Recipes',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_alert_outlined),
+                label: 'Alarm',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
